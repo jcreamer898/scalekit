@@ -9,5 +9,5 @@ const workspaceInfo = getWorkspaces(rootDir);
 await Promise.all(
   Object.values(workspaceInfo).map((workspace) => {
     return updateTsConfig(workspace.path);
-  })
+  }),
 );

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2018",
+    "rootDir": "src",
+    "outDir": "lib",
+    "incremental": true,
+    "tsBuildInfoFile": "lib/.tsbuildinfo",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "checkJs": true
+  },
+  "include": ["src"],
+  "references": []
+}

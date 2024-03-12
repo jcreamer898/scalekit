@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "pretty": true,
+    "target": "es2019",
+    "outDir": "./lib",
+    "incremental": true,
+    "tsBuildInfoFile": "./lib/.tsbuildinfo",
+    "declaration": true,
+    "strict": true,
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "composite": true
+  },
+  "include": ["./src"],
+  "references": [{ "path": "../logger/tsconfig.json" }]
+}

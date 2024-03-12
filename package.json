@@ -7,6 +7,8 @@
     "postinstall": "ts-auto-refs"
   },
   "devDependencies": {
+    "@scalekit/artifacts": "*",
+    "@scalekit/typescript-auto-references": "*",
     "typescript": "^5.4.2",
     "prettier": "^3.2.5"
   }
