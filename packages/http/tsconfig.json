@@ -1,0 +1,12 @@
+{
+  "extends": "@scalekit/tsconfig/tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./lib/tsconfig.tsbuildinfo",
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "declaration": true
+  },
+  "include": ["src/**/*"],
+  "references": [{ "path": "./tsconfig.references.json" }]
+}

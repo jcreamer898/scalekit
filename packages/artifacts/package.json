@@ -1,0 +1,17 @@
+{
+  "name": "@scalekit/artifacts",
+  "version": "0.1.0",
+  "private": true,
+  "bin": {
+    "aza": "./bin/aza.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "devDependencies": {
+    "@scalekit/tsconfig": "*",
+    "@scalekit/http": "*",
+    "@scalekit/tar-utils": "*",
+    "@types/node": "^20.11.25",
+    "typescript": "^5.4.2"
+  }
+}

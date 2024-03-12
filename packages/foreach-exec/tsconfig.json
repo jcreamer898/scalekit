@@ -1,0 +1,6 @@
+{
+  "compilerOptions": { "composite": true },
+  "extends": "@scalekit/tsconfig/tsconfig.base.json",
+  "include": ["src/**/*"],
+  "references": [{ "path": "./tsconfig.references.json" }]
+}

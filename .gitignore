@@ -1,0 +1,4 @@
+node_modules
+.tools
+!.tools/config.json
+tsconfig.references.json

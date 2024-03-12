@@ -1,0 +1,14 @@
+{
+  "name": "@scalekit/fast-exec",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "fast-exec": "./bin/fast-exec.js"
+  },
+  "devDependencies": {
+    "@scalekit/artifacts": "*",
+    "@scalekit/tsconfig": "*",
+    "@types/node": "20.11.25"
+  }
+}
