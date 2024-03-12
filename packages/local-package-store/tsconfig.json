@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "incremental": true,
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "tsBuildInfoFile": "lib/.tsbuildinfo",
+    "esModuleInterop": true,
+    "outDir": "lib",
+    "composite": true,
+    "rootDir": "./src"
+  },
+  "include": ["./src"],
+  "references": [{ "path": "../logger/tsconfig.json" }]
+}
