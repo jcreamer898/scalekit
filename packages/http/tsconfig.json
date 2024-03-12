@@ -7,6 +7,5 @@
     "outDir": "./lib",
     "declaration": true
   },
-  "include": ["src/**/*"],
-  "references": [{ "path": "./tsconfig.references.json" }]
+  "include": ["src/**/*"]
 }

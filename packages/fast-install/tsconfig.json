@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2018",
+    "rootDir": "src",
+    "outDir": "lib",
+    "incremental": true,
+    "tsBuildInfoFile": "lib/.tsbuildinfo",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "composite": true,
+    "types": ["chalk", "glob", "jest", "node"]
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.references.json" }]
+}

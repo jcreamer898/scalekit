@@ -9,7 +9,7 @@ export async function getGraphError(graph: Graph): Promise<string | undefined> {
     return `Multiple nodes have the following key: "${dupKey}"`;
   }
   const notAbsoluteLocations = graph.nodes.filter(
-    (n) => n.location !== "memory" && !path.isAbsolute(n.location)
+    (n) => n.location !== "memory" && !path.isAbsolute(n.location),
   );
   if (notAbsoluteLocations.length > 0) {
     return `Location of a node is not absolute: "${notAbsoluteLocations[0].location}"`;
@@ -18,8 +18,8 @@ export async function getGraphError(graph: Graph): Promise<string | undefined> {
   const nodesWithInvalidName = graph.nodes.filter(
     (n) =>
       !/^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-zA-Z0-9-~][a-zA-Z0-9-._~]*$/.test(
-        n.name
-      )
+        n.name,
+      ),
   );
   if (nodesWithInvalidName.length > 0) {
     return `Package name invalid: "${nodesWithInvalidName[0].name}"`;
@@ -40,7 +40,7 @@ export async function getGraphError(graph: Graph): Promise<string | undefined> {
            */
           return undefined;
         }
-      })
+      }),
     )
   ).filter(Boolean);
 
@@ -54,7 +54,7 @@ export async function getGraphError(graph: Graph): Promise<string | undefined> {
   });
 
   const linksWithWrongSource = graph.links.filter(
-    (l) => !nodeIds.has(l.source)
+    (l) => !nodeIds.has(l.source),
   );
 
   if (linksWithWrongSource.length > 0) {
@@ -62,7 +62,7 @@ export async function getGraphError(graph: Graph): Promise<string | undefined> {
   }
 
   const linksWithWrongTarget = graph.links.filter(
-    (l) => !nodeIds.has(l.target)
+    (l) => !nodeIds.has(l.target),
   );
 
   if (linksWithWrongTarget.length > 0) {
@@ -81,7 +81,7 @@ export async function getGraphError(graph: Graph): Promise<string | undefined> {
 }
 
 function findDependenciesWithSameName(
-  graph: Graph
+  graph: Graph,
 ): { source: number; targetName: string }[] {
   const keyToNameMap = new Map<number, string>();
   const dependenciesMap = new Map<number, Set<string>>();
@@ -121,7 +121,7 @@ function findDups<T>(array: T[]): T | undefined {
 }
 
 export async function getLocationError(
-  location: string
+  location: string,
 ): Promise<string | undefined> {
   if (location === "memory") {
     return;

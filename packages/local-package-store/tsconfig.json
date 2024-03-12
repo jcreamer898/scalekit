@@ -11,8 +11,8 @@
     "esModuleInterop": true,
     "outDir": "lib",
     "composite": true,
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "types": ["chalk", "jest", "node"]
   },
-  "include": ["./src"],
-  "references": [{ "path": "../logger/tsconfig.json" }]
+  "include": ["./src"]
 }

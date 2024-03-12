@@ -4,7 +4,7 @@
   "version": "1.22.37",
   "description": "Yarn Resolve And Fetch",
   "license": "BSD-2-Clause",
-  "main": "./lib/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "build": "yarn format",
     "format": "yarn prettier-package-json --write package.json && yarn prettier --write ."

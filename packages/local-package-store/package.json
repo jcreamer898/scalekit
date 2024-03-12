@@ -5,7 +5,6 @@
   "description": "Install a dependency graph on disk.",
   "license": "MIT",
   "author": "vincent.bailly@microsoft.com",
-  "repository": "https://dev.azure.com/office/office/_git/1js?path=packages/midgard-yarn-strict",
   "scripts": {
     "build": "yarn clean && yarn format && yarn compile",
     "clean": "rimraf lib",
@@ -13,6 +12,7 @@
     "format": "yarn prettier-package-json --write package.json && yarn prettier --write .",
     "test": "jest ./src"
   },
+  "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "dependencies": {
     "chalk": "^4.1.1",

@@ -35,7 +35,7 @@ function getNodesInOrder(tree: ExecutableTree): number[] {
 
 export async function executeTree(
   tree: ExecutableTree,
-  executor: (component: number) => Promise<void>
+  executor: (component: number) => Promise<void>,
 ): Promise<void> {
   const componentOrders = getNodesInOrder(tree);
 
@@ -59,7 +59,7 @@ export async function executeTree(
             .then(() => resolve())
             .catch((e) => reject(e));
         });
-      })
+      }),
     );
   });
 

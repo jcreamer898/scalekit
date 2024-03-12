@@ -8,9 +8,11 @@
     "tsBuildInfoFile": "lib/.tsbuildinfo",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "checkJs": true
+    "allowJs": false,
+    "checkJs": false,
+    "composite": true,
+    "types": ["node"],
+    "noEmit": true
   },
-  "include": ["src"],
-  "references": []
+  "include": ["src"]
 }

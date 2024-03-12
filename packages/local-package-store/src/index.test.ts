@@ -29,11 +29,11 @@ describe("input validation", () => {
             ],
             links: [],
           },
-          dir
-        )
+          dir,
+        ),
       ).rejects.toHaveProperty(
         "message",
-        'Package "0" exposes a bin script with an invalid name: "/wrongBinName"'
+        'Package "0" exposes a bin script with an invalid name: "/wrongBinName"',
       );
     });
     it("throws if bin names contain back-slashes", async () => {
@@ -51,11 +51,11 @@ describe("input validation", () => {
             ],
             links: [],
           },
-          dir
-        )
+          dir,
+        ),
       ).rejects.toHaveProperty(
         "message",
-        'Package "0" exposes a bin script with an invalid name: "\\wrongBinName"'
+        'Package "0" exposes a bin script with an invalid name: "\\wrongBinName"',
       );
     });
     it("throws if bin names contain a new-line", async () => {
@@ -73,11 +73,11 @@ describe("input validation", () => {
             ],
             links: [],
           },
-          dir
-        )
+          dir,
+        ),
       ).rejects.toHaveProperty(
         "message",
-        'Package "0" exposes a bin script with an invalid name: "wro\nngBinName"'
+        'Package "0" exposes a bin script with an invalid name: "wro\nngBinName"',
       );
     });
     it("throws if two different bin scripts with the same name have to be installed at the same location", async () => {
@@ -109,29 +109,29 @@ describe("input validation", () => {
               { source: 2, target: 1 },
             ],
           },
-          dir
-        )
+          dir,
+        ),
       ).rejects.toHaveProperty(
         "message",
-        'Several different scripts called "fooScript" need to be installed at the same location (2).'
+        'Several different scripts called "fooScript" need to be installed at the same location (2).',
       );
     });
   });
   describe("location", () => {
     it("throws if the location is a relative path", async () => {
       await expect(
-        installLocalStore(emptyGraph, "myDir")
+        installLocalStore(emptyGraph, "myDir"),
       ).rejects.toHaveProperty(
         "message",
-        `Location is not an absolute path: "myDir"`
+        `Location is not an absolute path: "myDir"`,
       );
     });
     it("reports the wrong path in the error when a relative path is passed", async () => {
       await expect(
-        installLocalStore(emptyGraph, "fooBar")
+        installLocalStore(emptyGraph, "fooBar"),
       ).rejects.toHaveProperty(
         "message",
-        `Location is not an absolute path: "fooBar"`
+        `Location is not an absolute path: "fooBar"`,
       );
     });
 
@@ -140,20 +140,20 @@ describe("input validation", () => {
       const filePath = path.join(dir, "file");
       fs.writeFileSync(filePath, "");
       await expect(
-        installLocalStore(emptyGraph, filePath)
+        installLocalStore(emptyGraph, filePath),
       ).rejects.toHaveProperty(
         "message",
-        `Location is not a directory: "${filePath}"`
+        `Location is not a directory: "${filePath}"`,
       );
     });
     it("throws if location does not exist", async () => {
       const dir = directory();
       const notExistentDir = path.join(dir, "foo");
       await expect(
-        installLocalStore(emptyGraph, notExistentDir)
+        installLocalStore(emptyGraph, notExistentDir),
       ).rejects.toHaveProperty(
         "message",
-        `Location does not exist: "${notExistentDir}"`
+        `Location does not exist: "${notExistentDir}"`,
       );
     });
   });
@@ -173,11 +173,11 @@ describe("input validation", () => {
               { source: 2, target: 1 },
             ],
           },
-          dir
-        )
+          dir,
+        ),
       ).rejects.toHaveProperty(
         "message",
-        'Package "2" depends on multiple packages called "foo"'
+        'Package "2" depends on multiple packages called "foo"',
       );
     });
     it("throws if a node has an invalid name", async () => {
@@ -188,8 +188,8 @@ describe("input validation", () => {
             nodes: [{ key: 0, name: "-/3/8", location: emptyFolder }],
             links: [],
           },
-          dir
-        )
+          dir,
+        ),
       ).rejects.toHaveProperty("message", 'Package name invalid: "-/3/8"');
     });
     it("throws if graph has multiple nodes with the same key", async () => {
@@ -203,11 +203,11 @@ describe("input validation", () => {
             ],
             links: [],
           },
-          dir
-        )
+          dir,
+        ),
       ).rejects.toHaveProperty(
         "message",
-        `Multiple nodes have the following key: "0"`
+        `Multiple nodes have the following key: "0"`,
       );
     });
     it("throws if a node location not an absolute path", async () => {
@@ -218,11 +218,11 @@ describe("input validation", () => {
             nodes: [{ key: 0, name: "a", location: "fooBar" }],
             links: [],
           },
-          dir
-        )
+          dir,
+        ),
       ).rejects.toHaveProperty(
         "message",
-        `Location of a node is not absolute: "fooBar"`
+        `Location of a node is not absolute: "fooBar"`,
       );
     });
     it("throws if a node location is not a directory", async () => {
@@ -237,11 +237,11 @@ describe("input validation", () => {
             nodes: [{ key: 0, name: "a", location: filePath }],
             links: [],
           },
-          storePath
-        )
+          storePath,
+        ),
       ).rejects.toHaveProperty(
         "message",
-        `Location of a node is not a directory: "${filePath}"`
+        `Location of a node is not a directory: "${filePath}"`,
       );
     });
     it("throws if a link source is an invalid key", async () => {
@@ -252,8 +252,8 @@ describe("input validation", () => {
             nodes: [{ key: 0, name: "a", location: dir }],
             links: [{ source: 10, target: 0 }],
           },
-          dir
-        )
+          dir,
+        ),
       ).rejects.toHaveProperty("message", `Invalid link source: "10"`);
     });
     it("throws if a link target is an invalid key", async () => {
@@ -264,8 +264,8 @@ describe("input validation", () => {
             nodes: [{ key: 0, name: "a", location: dir }],
             links: [{ source: 0, target: 10 }],
           },
-          dir
-        )
+          dir,
+        ),
       ).rejects.toHaveProperty("message", `Invalid link target: "10"`);
     });
   });
@@ -293,12 +293,12 @@ describe("happy path", () => {
     expect(
       fs
         .readFileSync(path.join(store, "0", "node_modules", "foo", "foo.js"))
-        .toString()
+        .toString(),
     ).toBe('console.log("foo")');
     expect(
       fs
         .readFileSync(path.join(store, "1", "node_modules", "bar", "bar.js"))
-        .toString()
+        .toString(),
     ).toBe('console.log("bar")');
   });
   it("Installs packages having nested folders", async () => {
@@ -317,9 +317,9 @@ describe("happy path", () => {
     expect(
       fs
         .readFileSync(
-          path.join(store, "0", "node_modules", "foo", "bar", "foo.js")
+          path.join(store, "0", "node_modules", "foo", "bar", "foo.js"),
         )
-        .toString()
+        .toString(),
     ).toBe('console.log("foo")');
   });
   it("Links packages as specified in the graph", async () => {
@@ -342,7 +342,7 @@ describe("happy path", () => {
     expect(
       fs
         .readFileSync(path.join(store, "0", "node_modules", "bar", "bar.js"))
-        .toString()
+        .toString(),
     ).toBe('console.log("bar")');
   });
   it("Creates simple bin script", async () => {
@@ -350,12 +350,12 @@ describe("happy path", () => {
     const foo = directory();
     await fs.promises.writeFile(
       path.join(foo, "package.json"),
-      '{"scripts":{"bar": "bar"}}'
+      '{"scripts":{"bar": "bar"}}',
     );
     const bar = directory();
     await fs.promises.writeFile(
       path.join(bar, "myBin"),
-      '#!/usr/bin/env node\nconsole.log("Hello from bar");'
+      '#!/usr/bin/env node\nconsole.log("Hello from bar");',
     );
 
     const graph = {
@@ -395,7 +395,7 @@ describe("happy path", () => {
     expect(
       fs
         .readFileSync(path.join(bar, "node_modules", "foo", "foo.js"))
-        .toString()
+        .toString(),
     ).toBe('console.log("foo")');
   });
   it("cleans node_module folder of local packages", async () => {
@@ -412,7 +412,7 @@ describe("happy path", () => {
     await installLocalStore(graph, store);
 
     await expect(
-      fs.promises.stat(path.join(foo, "node_modules", "touch"))
+      fs.promises.stat(path.join(foo, "node_modules", "touch")),
     ).rejects.toThrow();
   });
 
@@ -421,11 +421,11 @@ describe("happy path", () => {
     const foo = directory();
     fs.writeFileSync(
       path.join(foo, "foo.js"),
-      'require("fs").writeFileSync("postinstall", "postinstall");'
+      'require("fs").writeFileSync("postinstall", "postinstall");',
     );
     fs.writeFileSync(
       path.join(foo, "package.json"),
-      '{"scripts": { "postinstall": "node foo.js" } } '
+      '{"scripts": { "postinstall": "node foo.js" } } ',
     );
 
     const graph = {
@@ -438,9 +438,9 @@ describe("happy path", () => {
     expect(
       fs
         .readFileSync(
-          path.join(store, "0", "node_modules", "foo", "postinstall")
+          path.join(store, "0", "node_modules", "foo", "postinstall"),
         )
-        .toString()
+        .toString(),
     ).toBe("postinstall");
   });
 });
@@ -462,7 +462,7 @@ describe("special-cases", () => {
     });
 
     await expect(
-      fs.promises.stat(path.join(store, "0", "largeUselessFile"))
+      fs.promises.stat(path.join(store, "0", "largeUselessFile")),
     ).rejects.toThrow();
   });
   it("accept several nodes having the sane name", async () => {
@@ -483,7 +483,7 @@ describe("special-cases", () => {
     const foo = directory();
     await fs.promises.writeFile(
       path.join(foo, "index.js"),
-      'console.log("hello from foo");'
+      'console.log("hello from foo");',
     );
     const graph = {
       nodes: [
@@ -496,7 +496,7 @@ describe("special-cases", () => {
     await installLocalStore(graph, store);
 
     await fs.promises.stat(
-      path.join(store, "1", "node_modules", "@namespace", "foo", "index.js")
+      path.join(store, "1", "node_modules", "@namespace", "foo", "index.js"),
     );
   });
   it("installs bins that are in a nested folder", async () => {
@@ -504,13 +504,13 @@ describe("special-cases", () => {
     const foo = directory();
     await fs.promises.writeFile(
       path.join(foo, "package.json"),
-      '{"scripts":{"bar": "bar"}}'
+      '{"scripts":{"bar": "bar"}}',
     );
     const bar = directory();
     await fs.promises.mkdir(path.join(bar, "sub"));
     await fs.promises.writeFile(
       path.join(bar, "sub", "myBin"),
-      '#!/usr/bin/env node\nconsole.log("Hello from bar");'
+      '#!/usr/bin/env node\nconsole.log("Hello from bar");',
     );
 
     const graph = {
@@ -548,7 +548,7 @@ describe("special-cases", () => {
     await installLocalStore(graph, store);
 
     await fs.promises.stat(
-      path.join(store, "0", "node_modules", "foo", "index.js")
+      path.join(store, "0", "node_modules", "foo", "index.js"),
     );
   });
   it("allows dependencies to self to be declared explicitely", async () => {
@@ -582,11 +582,11 @@ describe("special-cases", () => {
     const foo = directory();
     await fs.promises.writeFile(
       path.join(foo, "package.json"),
-      '{"scripts":{"foo": "foo"}}'
+      '{"scripts":{"foo": "foo"}}',
     );
     await fs.promises.writeFile(
       path.join(foo, "myBin"),
-      '#!/usr/bin/env node\nconsole.log("Hello from foo");'
+      '#!/usr/bin/env node\nconsole.log("Hello from foo");',
     );
 
     const graph = {
@@ -616,7 +616,7 @@ describe("special-cases", () => {
     await installLocalStore(graph, store);
 
     await fs.promises.stat(
-      path.join(store, "0", "node_modules", "@name", "foo", "package.json")
+      path.join(store, "0", "node_modules", "@name", "foo", "package.json"),
     );
   });
   it("installs bins in owner's package", async () => {
@@ -658,8 +658,8 @@ describe("special-cases", () => {
 
     await expect(
       fs.promises.stat(
-        path.join(store, "barkey", "node_modules", ".bin", "foo")
-      )
+        path.join(store, "barkey", "node_modules", ".bin", "foo"),
+      ),
     ).rejects.toThrow();
   });
 });

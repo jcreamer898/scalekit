@@ -46,7 +46,7 @@ it("throws when it should", async () => {
 
   await expect(executeTree(tree, executor)).rejects.toHaveProperty(
     "message",
-    "foobar"
+    "foobar",
   );
 });
 

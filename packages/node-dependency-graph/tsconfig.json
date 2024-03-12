@@ -10,8 +10,8 @@
     "strict": true,
     "rootDir": "./src",
     "esModuleInterop": true,
-    "composite": true
+    "composite": true,
+    "types": ["chalk", "jest", "node", "semver"]
   },
-  "include": ["./src"],
-  "references": [{ "path": "../logger/tsconfig.json" }]
+  "include": ["./src"]
 }

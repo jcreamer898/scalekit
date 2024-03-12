@@ -22,7 +22,7 @@ const queue = new PQueue({ concurrency: 300 });
 
 const cmdShim: (
   from: string,
-  to: string
+  to: string,
 ) => Promise<void> = require("cmd-shim");
 
 const logger = console;
@@ -70,18 +70,18 @@ export type SymlinkType = "dir" | "junction";
 
 async function symlinkRelative(
   target: string,
-  symlinkPath: string
+  symlinkPath: string,
 ): Promise<void> {
   await fs.promises.symlink(
     path.relative(path.dirname(symlinkPath), target),
-    symlinkPath
+    symlinkPath,
   );
 }
 
 async function symlink(
   targetPath: string,
   symlinkPath: string,
-  symlinkType?: SymlinkType
+  symlinkType?: SymlinkType,
 ): Promise<void> {
   // Node on windows doesn't work well with relative paths.
   if (process.platform === "win32") {
@@ -94,7 +94,7 @@ async function symlink(
 export async function getDestinations(
   graph: Graph,
   location: string,
-  options?: Options
+  options?: Options,
 ) {
   await validateInput(graph, location, options?.ignoreBinConflicts);
 
@@ -125,7 +125,7 @@ const debug =
 export async function installLocalStore(
   graph: Graph,
   location: string,
-  options?: Options
+  options?: Options,
 ): Promise<void> {
   await validateInput(graph, location, options?.ignoreBinConflicts);
 
@@ -183,7 +183,7 @@ export async function installLocalStore(
     graph,
     cachedPackages,
     options?.filesToExclude,
-    options?.showProgress
+    options?.showProgress,
   );
   duration = Math.round((performance.now() - t0) / 100) / 10;
   isCi && console.log(`copying modules in store took ${duration} s`);
@@ -193,7 +193,7 @@ export async function installLocalStore(
     performance.measure(
       "destinations",
       "destinations-start",
-      "destinations-end"
+      "destinations-end",
     );
     performance.mark("install-nodes-start");
   }
@@ -203,7 +203,7 @@ export async function installLocalStore(
     performance.measure(
       "install-nodes",
       "install-nodes-start",
-      "install-nodes-end"
+      "install-nodes-end",
     );
     performance.mark("link-nodes-start");
   }
@@ -215,7 +215,7 @@ export async function installLocalStore(
       destinations,
       cachedPackages,
       options?.symlinkType || "junction",
-      options?.debugSymlinks
+      options?.debugSymlinks,
     );
     duration = Math.round((performance.now() - t0) / 100) / 10;
     isCi && console.log(`symlinking packages took ${duration} s`);
@@ -241,7 +241,7 @@ export async function installLocalStore(
       performance.measure(
         "create-bins",
         "create-bins-start",
-        "create-bins-end"
+        "create-bins-end",
       );
       performance.mark("run-scripts-start");
     }
@@ -256,7 +256,7 @@ export async function installLocalStore(
     destinations,
     cachedPackages,
     hashes,
-    workspacePackages
+    workspacePackages,
   );
   duration = Math.round((performance.now() - t0) / 100) / 10;
   isCi && console.log(`Running scripts took ${duration} s`);
@@ -294,7 +294,7 @@ function getNodeModulesFolder(location: string): string {
 async function getCachedPackages(
   graph: Graph,
   hashes: Map<number, string>,
-  destinations: Map<number, string>
+  destinations: Map<number, string>,
 ): Promise<Set<string>> {
   const result = new Set<string>();
 
@@ -315,7 +315,7 @@ async function getCachedPackages(
           result.add(loc);
         }
       } catch {}
-    })
+    }),
   );
   return result;
 }
@@ -325,7 +325,7 @@ async function runScripts(
   destinations: Map<number, string>,
   cachedPackages: Set<string>,
   hashes: Map<number, string>,
-  workspacePackages: Record<number, Node>
+  workspacePackages: Record<number, Node>,
 ): Promise<void> {
   const tree = convertGraphToTree(graph);
 
@@ -352,7 +352,7 @@ async function runScripts(
         const manifest: any = JSON.parse(
           await fs.promises.readFile(path.join(loc, "package.json"), {
             encoding: "utf8",
-          })
+          }),
         );
         function runScript(scriptName: string) {
           let t0 = performance.now();
@@ -379,25 +379,25 @@ async function runScripts(
                   // temporary hack to unblock devs on MAC arm.
                   logger.info(
                     `💥 ${chalk.gray(
-                      scriptName
+                      scriptName,
                     )} script failed ${chalk.cyanBright(
-                      manifest.name
-                    )} ${chalk.magentaBright(manifest.version)}`
+                      manifest.name,
+                    )} ${chalk.magentaBright(manifest.version)}`,
                   );
                   logger.info(chalk.gray(`> ${manifest.scripts[scriptName]}`));
                   if (out.length) {
                     logger.info(out);
                   }
                   return reject(
-                    new Error(`script ${scriptName} failed in ${loc}`)
+                    new Error(`script ${scriptName} failed in ${loc}`),
                   );
                 }
 
                 let duration = Math.round((performance.now() - t0) / 100) / 10;
                 logger.info(
                   `✅ ${chalk.gray(scriptName)} ${chalk.cyanBright(
-                    manifest.name
-                  )} ${chalk.magentaBright(manifest.version)} in ${duration} s`
+                    manifest.name,
+                  )} ${chalk.magentaBright(manifest.version)} in ${duration} s`,
                 );
                 resolve();
               });
@@ -405,10 +405,10 @@ async function runScripts(
               child.on("error", (e) => {
                 logger.info(
                   `💥 ${chalk.gray(
-                    scriptName
+                    scriptName,
                   )} script failed ${chalk.cyanBright(
-                    manifest.name
-                  )} ${chalk.magentaBright(manifest.version)}`
+                    manifest.name,
+                  )} ${chalk.magentaBright(manifest.version)}`,
                 );
                 reject(e);
               });
@@ -429,7 +429,7 @@ async function runScripts(
         const cacheFile = path.join(getNodeModulesFolder(dest), ".hash");
         await fs.promises.mkdir(path.dirname(cacheFile), { recursive: true });
         await fs.promises.writeFile(cacheFile, hashes.get(n)!);
-      })
+      }),
     );
   }
 
@@ -439,7 +439,7 @@ async function runScripts(
 async function createBins(
   graph: Graph,
   destinations: Map<number, string>,
-  cachedPackages: Set<string>
+  cachedPackages: Set<string>,
 ): Promise<void> {
   const binsMap = new Map<number, Map<string, string>>();
   const binCallCache = new Map();
@@ -496,7 +496,7 @@ async function createBins(
     graph.nodes
       .map((n) => ({ source: n.key, target: n.key }))
       .concat(graph.links)
-      .map(async (l) => installLink(l))
+      .map(async (l) => installLink(l)),
   );
 
   async function installLink({
@@ -534,7 +534,7 @@ async function createBins(
 
       if (binCallCache.has(binLink)) {
         logger.debug(
-          `Attempted to create symlink to ${binLink} twice from ${sourceLoc}`
+          `Attempted to create symlink to ${binLink} twice from ${sourceLoc}`,
         );
         continue;
       }
@@ -567,7 +567,7 @@ async function linkNodes(
   destinations: Map<number, string>,
   cachedPackages: Set<string>,
   symlinkType: SymlinkType,
-  debugSymlinks?: boolean
+  debugSymlinks?: boolean,
 ): Promise<void> {
   const hookPath = process.env["MYS_HOOKS_PATH"];
   if (hookPath) {
@@ -582,7 +582,7 @@ async function linkNodes(
       const targetPath = destinations.get(link.target)!;
       const symlinkPath = path.join(
         getNodeModulesFolder(destinations.get(link.source)!),
-        name
+        name,
       );
 
       links.push({ targetPath, symlinkPath });
@@ -604,7 +604,7 @@ async function linkNodes(
       const targetPath = destinations.get(link.target)!;
       const linkToCreate = path.join(
         getNodeModulesFolder(destinations.get(link.source)!),
-        name
+        name,
       );
 
       const isCached = cachedPackages.has(destinations.get(link.source)!);
@@ -624,23 +624,23 @@ async function linkNodes(
           await fs.promises.mkdir(
             path.join(
               getNodeModulesFolder(destinations.get(link.source)!),
-              ".children"
+              ".children",
             ),
-            { recursive: true }
+            { recursive: true },
           );
           await symlink(
             getNodeModulesFolder(targetPath),
             path.join(
               getNodeModulesFolder(destinations.get(link.source)!),
               ".children",
-              path.basename(path.join(getNodeModulesFolder(targetPath), ".."))
+              path.basename(path.join(getNodeModulesFolder(targetPath), "..")),
             ),
-            symlinkType
+            symlinkType,
           );
           // Making a link from the child to the parent to make it easy to navigate the dependency graph for debugging purpose.
           await fs.promises.mkdir(
             path.join(getNodeModulesFolder(targetPath), ".parents"),
-            { recursive: true }
+            { recursive: true },
           );
           await symlink(
             getNodeModulesFolder(destinations.get(link.source)!),
@@ -650,25 +650,25 @@ async function linkNodes(
               path.basename(
                 path.join(
                   getNodeModulesFolder(destinations.get(link.source)!),
-                  ".."
-                )
-              )
+                  "..",
+                ),
+              ),
             ),
-            symlinkType
+            symlinkType,
           );
         }
       } catch (err) {
         // TODO: I think we can just ignore this error, but not sure @vincent
         // console.error(err);
       }
-    })
+    }),
   );
 }
 
 export function generateDestinations(
   hashes: Map<number, string>,
   graph: Graph,
-  location: string
+  location: string,
 ): Map<number, string> {
   const result = new Map<number, string>();
   graph.nodes.forEach((n) => {
@@ -681,12 +681,14 @@ export function generateDestinations(
             ? `${n.name.replace(/\//, "-")}@${n.version}-${hashes
                 .get(key)!
                 .slice(0, 20)}`
-            : key.toString()
+            : key.toString(),
         );
 
     result.set(
       key,
-      n.keepInPlace ? n.location : path.join(storeEntry, "node_modules", n.name)
+      n.keepInPlace
+        ? n.location
+        : path.join(storeEntry, "node_modules", n.name),
     );
     n.destination = storeEntry;
   });
@@ -699,7 +701,7 @@ async function installNodesInStore(
   graph: Graph,
   cachedPackages: Set<string>,
   exclusionList?: string[],
-  showProgress?: boolean
+  showProgress?: boolean,
 ): Promise<void> {
   const dirActions: CopyQueueItem[] = [];
   const dirsToCopy = new Set<string>();
@@ -713,7 +715,7 @@ async function installNodesInStore(
     const destination = destinations.get(key)!;
     if (n.keepInPlace) {
       keepInPlaceNodeModulesToDelete.push(
-        path.join(destination, "node_modules")
+        path.join(destination, "node_modules"),
       );
       return;
     }
@@ -754,7 +756,7 @@ async function installNodesInStore(
 
     const files: string[] = [];
     dirActions.forEach((a) =>
-      findFiles((a.src as any).loc, files, exclusionList)
+      findFiles((a.src as any).loc, files, exclusionList),
     );
 
     if (onCopyFiles) {
@@ -767,7 +769,7 @@ async function installNodesInStore(
   await Promise.all([
     copyFiles(dirActions, exclusionList, showProgress),
     ...keepInPlaceNodeModulesToDelete.map((e) =>
-      fs.promises.rm(e, { recursive: true, force: true })
+      fs.promises.rm(e, { recursive: true, force: true }),
     ),
   ]);
 }
@@ -775,7 +777,7 @@ async function installNodesInStore(
 async function validateInput(
   graph: Graph,
   location: string,
-  ignoreBinConflicts: boolean | undefined
+  ignoreBinConflicts: boolean | undefined,
 ): Promise<void> {
   const locationError = await getLocationError(location);
   if (locationError !== undefined) {
@@ -793,7 +795,7 @@ async function validateInput(
 
 function getBinError(
   graph: Graph,
-  ignoreBinConflicts: boolean | undefined
+  ignoreBinConflicts: boolean | undefined,
 ): string | undefined {
   const errors = graph.nodes
     .map((node) => {
@@ -834,7 +836,7 @@ function getBinError(
     targetBins.forEach((binName) => {
       if (installedBinMap.get(source)!.has(binName) && !ignoreBinConflicts) {
         binCollisionErrors.push(
-          `Several different scripts called "${binName}" need to be installed at the same location (${source}).`
+          `Several different scripts called "${binName}" need to be installed at the same location (${source}).`,
         );
       }
       installedBinMap.get(source)!.add(binName);

@@ -270,7 +270,7 @@ const splitWork = <T>(queue: Array<T>) => {
 
         return acc;
       },
-      [[]] as [T[]]
+      [[]] as [T[]],
     )
     .filter((ac) => ac && ac.length);
 
@@ -287,7 +287,7 @@ function reportProgress(name: string, completed: number, total: number) {
 async function executeWork<T>(
   workers: Worker[],
   queue: T[],
-  showProgress = false
+  showProgress = false,
 ) {
   await new Promise<void>((resolve, reject) => {
     const split = splitWork(queue);
@@ -337,7 +337,7 @@ async function executeWork<T>(
 export async function copyFiles(
   queue: CopyQueue,
   exclusionList?: string[],
-  showProgress?: boolean
+  showProgress?: boolean,
 ): Promise<void> {
   if (queue.length === 0) {
     return;

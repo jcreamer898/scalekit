@@ -4,11 +4,14 @@
   "workspaces": ["packages/*"],
   "main": "src/index.js",
   "scripts": {
+    "clean": "rm -rf .store node_modules packages/*/node_modules",
+    "fast-install": "node packages/fast-install/dist/midgard-yarn-strict.bundle.js",
     "postinstall": "ts-auto-refs"
   },
   "devDependencies": {
     "@scalekit/artifacts": "*",
     "@scalekit/typescript-auto-references": "*",
+    "lage": "^2.7.12",
     "typescript": "^5.4.2",
     "prettier": "^3.2.5"
   }

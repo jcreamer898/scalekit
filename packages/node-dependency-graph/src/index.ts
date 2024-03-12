@@ -397,7 +397,7 @@ const convertGraphToJson = (
   {
     failOnMissingPeerDependencies = false,
     logger,
-  }: { failOnMissingPeerDependencies?: boolean; logger: Logger }
+  }: { failOnMissingPeerDependencies?: boolean; logger: any }
 ): {
   graph: JsonGraph;
   missings: Missing[];
@@ -497,10 +497,10 @@ export function createDependencyGraph(
   manifests: PackageManifest[],
   resolutionMap: ResolutionMap,
   failOnMissingPeerDependencies?: boolean,
-  logger?: Logger
+  logger?: any
 ): JsonGraph {
   if (!logger) {
-    logger = defaultLogger;
+    logger = console;
   }
   const graph = createGraph(
     manifests,
@@ -527,10 +527,10 @@ export function getGraphWithUnmetPeers(
   manifests: PackageManifest[],
   resolutionMap: ResolutionMap,
   failOnMissingPeerDependencies?: boolean,
-  logger?: Logger
+  logger?: typeof console
 ) {
   if (!logger) {
-    logger = defaultLogger;
+    logger = console;
   }
   const graph = createGraph(
     manifests,

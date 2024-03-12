@@ -1,4 +1,4 @@
-import { createDependencyGraph, PackageManifest, Logger } from "./";
+import { createDependencyGraph, PackageManifest } from "./";
 
 it("resolves basic graph", () => {
   const packageManifests = [
@@ -1554,7 +1554,7 @@ it("emit warning if peerDependency is fulfilled with wrong version", () => {
     silly: jest.MockedFunction<(...args: any[]) => void>;
   };
 
-  const logger: Logger & MockLogger = {
+  const logger = {
     warn: () => {},
     silly: jest.fn(() => {}),
     error: () => {},
@@ -1593,9 +1593,7 @@ it("emit warning if peerDependency is fulfilled with wrong version", () => {
   };
   createDependencyGraph(packageManifests, resolutionMap, undefined, logger);
   expect(logger.silly).toHaveBeenCalledTimes(1);
-  expect(logger.silly.mock.calls[0][0]).toContain(
-    "❗ Unmatching peer dependency"
-  );
+  expect(logger.silly.mock.calls[0]).toContain("❗ Unmatching peer dependency");
 });
 it("report missing peer dependencies when nested peer dependencies", () => {
   const packageManifests: PackageManifest[] = [

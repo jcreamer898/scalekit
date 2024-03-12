@@ -187,9 +187,17 @@ async function getPackageDirectDependencies(loc) {
  * @returns 
  */
 async function getTsPackageDependencies(loc) {
-  const TsDependencies = (await getPackageDirectDependencies(loc)).filter(
-    async (p) => await isCompositePackage(p.location) && isWorkspaceDependency(p.location)
-  );
+  const pkgDeps = (await getPackageDirectDependencies(loc));
+  const TsDependencies = [];
+  for (const p of pkgDeps) {
+    const isComposite = await isCompositePackage(p.location);
+    const isWsDep = isWorkspaceDependency(p.location);
+
+    if (isComposite && isWsDep) {
+      TsDependencies.push(p)
+    }
+  }
+
   return TsDependencies.sort((a, b) => a.location.localeCompare(b.location));
 }
 
@@ -285,6 +293,7 @@ export async function updateTsConfig(cwd) {
       .relative(cwd, path.join(p.location, "tsconfig.json"))
       .replace(/\\/g, "/"),
   }));
+  // console.log({ newReferences })
 
   if (!newReferences || newReferences.length === 0) {
     if (tsconfig.references !== undefined) {
