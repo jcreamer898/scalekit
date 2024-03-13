@@ -44,6 +44,7 @@ switch (subcommand) {
     console.log(`Package ${green(name)} is at ${cyan(version)}.`);
     console.log("")
     console.log("Below is the build information:")
+    console.log(`${green("Build URL")}: ${cyan(`https://dev.azure.com/${organization}/${project}/_build/results?buildId=${build['Build.BuildId']}&view=results`)}`)
     Object.entries(build).forEach(([key, value]) => {
       console.log(`${green(key)}: ${cyan(value)}`);
     })
