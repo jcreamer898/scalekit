@@ -1,10 +1,8 @@
 # midgard-yarn-strict
 
-midgard-yarn-strict is a stopgap package manager for the 1JS repository. The
-goal of 1JS is to use npm so we can lean on the npm team to deliver a first
-class support for our package manager. The scaling challenges faced by 1JS
-previous package manager [midgard-yarn]() need a solution before all the
-blockers of using npm are resolved, midgard-yarn-strict is this solution.
+midgard-yarn-strict is a fast package manager based on pnpm and yarn. The
+goal of MYS is to use npm so we can lean on the npm team to deliver a first
+class support for our package manager.
 
 midgard-yarn-strict is a fork of
 [midgard-yarn](https://www.npmjs.com/package/midgard-yarn), which is itself a

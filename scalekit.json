@@ -1,0 +1,9 @@
+{
+  "registries": {
+    "ado": "https://jcreamer.pkgs.visualstudio.com/_packaging/jcreamer/npm/registry/"
+  },
+  "tools": [{
+    "name": "@jcreamer898/midgard-yarn-strict",
+    "version": "1.2.5"
+  }]
+}

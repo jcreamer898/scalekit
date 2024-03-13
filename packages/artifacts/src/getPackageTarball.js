@@ -4,6 +4,16 @@ import path from "path";
 import { parseTarball, toSharedArrayBuffer } from "@scalekit/tar-utils";
 import { getTarball } from "@scalekit/http";
 
+
+/**
+ * @typedef {object} PackageTarball
+ * @property {string} registry
+ * @property {string} name
+ * @property {string} version
+ * @property {string} destination
+ * @property {string[]} files
+ */
+
 /**
  *
  * @param {object} options
@@ -11,7 +21,7 @@ import { getTarball } from "@scalekit/http";
  * @param {string} options.name
  * @param {string} options.version
  * @param {string} options.destination
- * @returns {Promise<{ files: string[] }>}
+ * @returns {Promise<PackageTarball>}
  */
 export function getPackageTarball({ registry, name, version, destination }) {
   return new Promise(async (resolve, reject) => {
@@ -20,6 +30,9 @@ export function getPackageTarball({ registry, name, version, destination }) {
       `${registry}/${name}/-/${nameWithoutScope}-${version}.tgz`,
     );
 
+    /**
+     * @type {Buffer}
+     */
     const buffer = await toSharedArrayBuffer(pkg);
 
     const tarContent = zlib.gunzipSync(buffer);
@@ -44,6 +57,7 @@ export function getPackageTarball({ registry, name, version, destination }) {
       }
 
       resolve({
+        registry, name, version, destination,
         files: Array.from(files.keys()),
       });
     } catch (e) {

@@ -25,8 +25,15 @@ export const get = (url, { headers } = {}) =>
       .on("error", reject);
   });
 
-const authHeader = async (token = process.env.REGISTRY_TOKEN) => {
-  const authToken = token || (await getToken());
+/**
+ * 
+ * @param {object} options
+ * @param {string} [options.token]
+ * @param {string} options.url
+ * @returns 
+ */
+const authHeader = async ({ token = process.env.REGISTRY_TOKEN, url }) => {
+  const authToken = token || (await getToken(url));
 
   return {
     Authorization: `Basic ${Buffer.from(`.:${authToken}`).toString("base64")}`,
@@ -38,20 +45,35 @@ const authHeader = async (token = process.env.REGISTRY_TOKEN) => {
  * @param {*} url
  * @param {Object} options
  * @param {import("http").ClientRequestArgs["headers"]} [options.headers]
- * @returns {Promise<import("http").IncomingMessage>}
+ * @returns {Promise<any>}
  */
 export const getJSON = async (url, options = {}) => {
-  const headers = {
-    ...(await authHeader()),
-    Accept: "application/json",
-  };
-
-  const response = await get(url, {
-    headers,
-    ...options,
+  return new Promise(async (resolve, reject) => {
+    const headers = {
+      ...(await authHeader({ url })),
+      Accept: "application/json",
+    };
+  
+    const response = await get(url, {
+      headers,
+      ...options,
+    });
+  
+    if (response.statusCode === 401) {
+      reject(new Error(
+        `Request failed with 401. check your token.`,
+      ));
+    }
+  
+    let data = "";
+    response.on("data", (chunk) => {
+      data += chunk.toString();
+    });
+  
+    response.on("end", () => {
+      resolve(JSON.parse(data.toString()))
+    });
   });
-
-  return response;
 };
 
 /**
@@ -61,7 +83,7 @@ export const getJSON = async (url, options = {}) => {
 export const getTarball = async (url) => {
   const response = await get(url, {
     headers: {
-      ...(await authHeader()),
+      ...(await authHeader({ url })),
       "Accept-Encoding": "gzip",
     },
   });

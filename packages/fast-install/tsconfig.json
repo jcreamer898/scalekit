@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "composite": true,
-    "types": ["chalk", "glob", "jest", "node"]
+    "types": ["chalk", "glob", "jest", "node", "webpack"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.references.json" }]

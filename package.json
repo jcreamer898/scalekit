@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@scalekit/artifacts": "*",
+    "@scalekit/kit-cli": "*",
     "@scalekit/typescript-auto-references": "*",
     "lage": "^2.7.12",
     "typescript": "^5.4.2",

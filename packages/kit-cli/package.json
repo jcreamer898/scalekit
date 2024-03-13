@@ -1,10 +1,13 @@
 {
-  "name": "@scalekit/fast-exec",
+  "name": "@scalekit/kit-cli",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "bin": {
-    "fast-exec": "./bin/fast-exec.js"
+    "kit": "./bin/index.js"
+  },
+  "dependencies": {
+    "ora": "^8.0.1"
   },
   "devDependencies": {
     "@scalekit/artifacts": "*",

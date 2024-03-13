@@ -1,12 +1,13 @@
 import path from "path";
 import IgnoreDynamicRequire from "webpack-ignore-dynamic-require";
+import webpack from "webpack";
 
 export default () => {
   /**
    * @type {import('webpack').Configuration}
    */
   const config = {
-    mode: "development",
+    mode: "production",
     target: "node",
     entry: {
       "midgard-yarn-strict": "./src/index.ts",
@@ -38,9 +39,15 @@ export default () => {
       __dirname: false,
     },
     optimization: {
-      moduleIds: "natural",
+      moduleIds: "deterministic",
     },
-    plugins: [new IgnoreDynamicRequire()],
+    plugins: [
+      new IgnoreDynamicRequire(),
+      new webpack.DefinePlugin({
+        "process.env.NPM_CONFIG_PRODUCTION": JSON.stringify("false"),
+        "process.env.YARN_PRODUCTION": JSON.stringify("false"),
+      }),
+    ],
   };
 
   return config;
