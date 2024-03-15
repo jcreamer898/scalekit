@@ -1,0 +1,6 @@
+{
+  "files": ["src/**"],
+  "rules": {
+    "no-console": "warn"
+  }
+}

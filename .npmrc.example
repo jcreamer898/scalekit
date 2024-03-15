@@ -1,0 +1,6 @@
+registry=https://pkgs.dev.azure.com/project/org/_packaging/feed/npm/registry/
+always-auth=true
+loglevel=warn
+access=public
+network-concurrency=40
+network-timeout=30000

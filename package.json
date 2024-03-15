@@ -9,6 +9,7 @@
     "postinstall": "ts-auto-refs"
   },
   "devDependencies": {
+    "@scalekit/ado-auto-auth": "*",
     "@scalekit/artifacts": "*",
     "@scalekit/kit-cli": "*",
     "@scalekit/typescript-auto-references": "*",
