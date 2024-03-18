@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rm -rf .store node_modules packages/*/node_modules",
     "fast-install": "node packages/fast-install/dist/midgard-yarn-strict.bundle.js",
+    "kit": "node packages/kit-cli/bin/index.js",
     "postinstall": "ts-auto-refs"
   },
   "devDependencies": {

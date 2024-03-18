@@ -1,6 +1,4 @@
 import { parseArgs } from "util";
-import assert from "assert";
-import ora from "ora"
 import { install } from "./install.js";
 import { run } from "./run.js";
 
@@ -25,15 +23,14 @@ switch (subcommand) {
     const [] = args;
 
     // assert(name, "Name must be specified");
-    const spinner = ora('Downloading tools.').start();
+    console.log('Downloading tools.');
     const start = Date.now();
     const installed = await install();
     if (!installed || !installed.length) {
-      spinner.stop();
       console.log("No tools installed.");
       break;
     }
-    spinner.stop();
+    
     for (const tool of installed) {
       console.log(`📦 Installed ${tool.name}@${tool.version}`);
     }

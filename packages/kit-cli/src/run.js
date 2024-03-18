@@ -9,19 +9,23 @@ import { scalekitConfig } from "./config.js";
  * @param {string} destination
  */
 export const getToolsInDir = async (destination) => {
-  const toolsDirs = await fs.readdir(destination);
+  const toolsDirs = await fs.readdir(destination, { withFileTypes: true});
   const toolPaths = [];
 
   for (const dir of toolsDirs) {
-    if (dir.startsWith("@")) {
-      const scopedDir = await fs.readdir(path.join(destination, dir));
+    if (!dir.isDirectory()) continue;
+
+    if (dir.name.startsWith("@")) {
+      const scopedDir = await fs.readdir(path.join(destination, dir.name));
       scopedDir.forEach((subDir) =>
-        toolPaths.push(path.join(destination, dir, subDir)),
+        toolPaths.push(path.join(destination, dir.name, subDir)),
       );
     } else {
-      toolPaths.push(path.join(destination, dir));
+      toolPaths.push(path.join(destination, dir.name));
     }
   }
+
+  console.log(toolPaths)
 
   const tools = new Map();
   for (const tool of toolPaths) {
@@ -52,7 +56,7 @@ export const run = async (name) => {
   
   const bins = new Map();
   
-  for (const [name, tool] of tools) {
+  for (const [, tool] of tools) {
     if (tool.bins) {
       Object.entries(tool.bins).forEach(([binName, binPath]) => {
         bins.set(binName, binPath);
