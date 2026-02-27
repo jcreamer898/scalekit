@@ -130,7 +130,7 @@ function isWorkspaceDependency(location) {
  */
 async function isCompositePackage(location) {
   try {
-    const config = (await import(path.join(location, "tsconfig.json"), { assert: { type: "json" } })).default;
+    const config = (await import(path.join(location, "tsconfig.json"), { with: { type: "json" } })).default;
     return config.compilerOptions && config.compilerOptions.composite;
   } catch {
     return false;
@@ -142,7 +142,7 @@ async function isCompositePackage(location) {
  * @returns 
  */
 async function getPackageDirectDependenciesNames(l) {
-  const packageJson = (await import(path.join(l, "package.json"),  { assert: { type: "json" } })).default;
+  const packageJson = (await import(path.join(l, "package.json"),  { with: { type: "json" } })).default;
   const dependencies = Object.keys(packageJson.dependencies || []);
   const devDependencies = Object.keys(packageJson.devDependencies || []);
   const uniqueDependencies = [
@@ -207,7 +207,7 @@ async function getTsPackageDependencies(loc) {
  * @returns 
  */
 async function shouldPackageUseStrictTypes(loc) {
-  const packageJson = (await import(path.join(loc, "package.json"),  { assert: { type: "json" } } )).default;
+  const packageJson = (await import(path.join(loc, "package.json"),  { with: { type: "json" } } )).default;
   return (
     typeof packageJson.strictTypes === "undefined" ||
     packageJson.strictTypes === true
@@ -220,7 +220,7 @@ async function shouldPackageUseStrictTypes(loc) {
  * @returns 
  */
 async function getTypesForPackage(loc) {
-  const packageJson = (await import(path.join(loc, "package.json"),  { assert: { type: "json" } })).default;
+  const packageJson = (await import(path.join(loc, "package.json"),  { with: { type: "json" } })).default;
   const dependencies = packageJson.dependencies || {};
   const devDependencies = packageJson.devDependencies || {};
   const deps = Object.keys({ ...dependencies, ...devDependencies });

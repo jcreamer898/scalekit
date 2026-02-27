@@ -12,6 +12,6 @@
     "@scalekit/http": "*",
     "@scalekit/tar-utils": "*",
     "@types/node": "^20.11.25",
-    "typescript": "^5.4.2"
+    "typescript": "^5.5.3"
   }
 }

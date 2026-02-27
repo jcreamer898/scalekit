@@ -7,13 +7,13 @@ import { cyan, green } from "./colors.js";
 const { values, positionals } = parseArgs({
   args: process.argv.slice(2),
   options: {
-    organization: { type: "string" },
-    project: { type: "string" },
-    feed: { type: "string" },
-    destination: { type: "string" },
-    name: { type: "string" },
-    version: { type: "string" },
-    registry: { type: "string" },
+    organization: { type: "string", short: "o" },
+    project: { type: "string", short: "p" },
+    feed: { type: "string", short: "f" },
+    destination: { type: "string", short: "d", },
+    name: { type: "string", short: "n" },
+    version: { type: "string", short: "v" },
+    registry: { type: "string", short: "r" },
   },
   allowPositionals: true,
 });

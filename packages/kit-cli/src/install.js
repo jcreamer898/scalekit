@@ -10,7 +10,6 @@ import { scalekitConfig } from "./config.js";
  */
 
 export const install = async () => {
-
   // Usage
   return await Promise.all([
     ...scalekitConfig.tools.map((tool) =>

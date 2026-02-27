@@ -5,3 +5,4 @@ tsconfig.references.json
 lib
 packages/*/lib
 packages/*/dist
+packages/*/out

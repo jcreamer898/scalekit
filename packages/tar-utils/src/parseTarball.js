@@ -48,5 +48,6 @@ export function parseTarball(buffer) {
     }
     offset += 512 + 512 * Math.ceil(fileSize / 512);
   }
+
   return files;
 }

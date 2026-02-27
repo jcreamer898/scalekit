@@ -25,8 +25,6 @@ export const getToolsInDir = async (destination) => {
     }
   }
 
-  console.log(toolPaths)
-
   const tools = new Map();
   for (const tool of toolPaths) {
     const pkg = await readJson(path.join(tool, "package.json"));
